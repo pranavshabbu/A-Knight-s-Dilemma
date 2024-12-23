@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 3
+  tags:
+  - Ground
+  - progressPoint
+  - Checkpoint
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Patrol
+  - Earth
+  - Player
+  - SwordEnemy
+  - Enemy2
+  - Slime
+  - Boss
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: sky
+    uniqueID: 2643561463
+    locked: 0
+  - name: far_cloud
+    uniqueID: 2618496513
+    locked: 0
+  - name: cloud
+    uniqueID: 2544867613
+    locked: 0
+  - name: far_mountain
+    uniqueID: 1467292501
+    locked: 0
+  - name: mountain
+    uniqueID: 722787033
+    locked: 0
+  - name: trees
+    uniqueID: 2868025055
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Grass
+    uniqueID: 2372459437
+    locked: 0
+  m_RenderingLayers:
+  - Default
