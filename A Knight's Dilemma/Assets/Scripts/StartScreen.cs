@@ -11,20 +11,18 @@ public class StartScreen : MonoBehaviour
 
     void Start()
     {
-        // Show the first screen at the beginning
         firstScreen.SetActive(true);
         secondScreen.SetActive(false);
-        Time.timeScale = 0f; // Pause the game
+        Time.timeScale = 0f; 
     }
 
     void Update()
     {
-        // Check for input and manage screens
-        if (!firstScreenShown && Input.GetMouseButtonDown(0)) // Click to move to the second screen
+        if (!firstScreenShown && Input.GetMouseButtonDown(0)) 
         {
             ShowSecondScreen();
         }
-        else if (firstScreenShown && !secondScreenShown && Input.GetMouseButtonDown(0)) // Click to start the game
+        else if (firstScreenShown && !secondScreenShown && Input.GetMouseButtonDown(0)) 
         {
             StartGame();
         }
@@ -33,14 +31,14 @@ public class StartScreen : MonoBehaviour
     void ShowSecondScreen()
     {
         firstScreenShown = true;
-        firstScreen.SetActive(false); // Hide the first screen
-        secondScreen.SetActive(true); // Show the second screen
+        firstScreen.SetActive(false); 
+        secondScreen.SetActive(true); 
     }
 
     void StartGame()
     {
         secondScreenShown = true;
-        secondScreen.SetActive(false); // Hide the second screen
-        Time.timeScale = 1f; // Resume the game
+        secondScreen.SetActive(false); 
+        Time.timeScale = 1f; 
     }
 }
