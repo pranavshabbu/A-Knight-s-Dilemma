@@ -29,30 +29,27 @@ public class Enemy2 : MonoBehaviour
 
     void Start()
     {
-        startingPosition = transform.position; // Save initial position for returning
+        startingPosition = transform.position; 
     }
 
     void Update()
     {
-        // Check for death
         if (maxHealth <= 0)
         {
             Die();
         }
 
-        // Check if player is in range
         if (Vector2.Distance(transform.position, player.position) <= attackRange)
         {
             inRange = true;
             isChasingPlayer = true;
-            isReturningToStart = false; // Stop returning when player is nearby
+            isReturningToStart = false; 
         }
         else
         {
             inRange = false;
         }
 
-        // Handle enemy states
         if (isChasingPlayer)
         {
             HandleChasingPlayer();
@@ -71,7 +68,6 @@ public class Enemy2 : MonoBehaviour
     {
         if (inRange)
         {
-            // Face the player
             if (player.position.x > transform.position.x && facingLeft)
             {
                 transform.eulerAngles = new Vector3(0, -180, 0);
@@ -83,7 +79,6 @@ public class Enemy2 : MonoBehaviour
                 facingLeft = true;
             }
 
-            // Move toward the player
             if (Vector2.Distance(transform.position, player.position) > retrieveDistance)
             {
                 animator.SetBool("Attack", false);
@@ -96,7 +91,6 @@ public class Enemy2 : MonoBehaviour
         }
         else
         {
-            // Stop chasing and return to start
             animator.SetBool("Attack", false);
             isChasingPlayer = false;
             isReturningToStart = true;
@@ -105,10 +99,8 @@ public class Enemy2 : MonoBehaviour
 
     void ReturnToStartPosition()
     {
-        // Move back to starting position
         transform.position = Vector2.MoveTowards(transform.position, startingPosition, moveSpeed * Time.deltaTime);
 
-        // Face the starting position
         if (transform.position.x > startingPosition.x && facingLeft)
         {
             transform.eulerAngles = new Vector3(0, -180, 0);
@@ -120,7 +112,6 @@ public class Enemy2 : MonoBehaviour
             facingLeft = true;
         }
 
-        // Stop returning once near the starting position
         if (Vector2.Distance(transform.position, startingPosition) < 0.1f)
         {
             isReturningToStart = false;
@@ -129,10 +120,8 @@ public class Enemy2 : MonoBehaviour
 
     void Patrol()
     {
-        // Basic patrol movement
         transform.Translate(Vector2.left * Time.deltaTime * moveSpeed);
 
-        // Check for boundaries
         RaycastHit2D hit = Physics2D.Raycast(checkPoint.position, Vector2.down, distance, layerMask);
 
         if (hit == false && facingLeft)
