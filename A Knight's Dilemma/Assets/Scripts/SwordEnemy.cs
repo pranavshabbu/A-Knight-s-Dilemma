@@ -27,23 +27,21 @@ public class SwordEnemy : MonoBehaviour
 
     void Start()
     {
-        startingPosition = transform.position; // Save the initial position as the patrol area
+        startingPosition = transform.position; 
     }
 
     void Update()
     {
-        // Check for death
         if (maxHealth <= 0)
         {
             Die();
         }
 
-        // Determine if the player is in attack range
         if (Vector2.Distance(transform.position, player.position) <= attackRange)
         {
             inRange = true;
             isChasingPlayer = true;
-            isReturningToStart = false; // Stop returning if chasing the player
+            isReturningToStart = false;
         }
         else
         {
@@ -68,7 +66,6 @@ public class SwordEnemy : MonoBehaviour
     {
         if (inRange)
         {
-            // Turn towards player
             if (player.position.x > transform.position.x && facingLeft)
             {
                 transform.eulerAngles = new Vector3(0, -180, 0);
@@ -80,7 +77,6 @@ public class SwordEnemy : MonoBehaviour
                 facingLeft = true;
             }
 
-            // Chase player
             if (Vector2.Distance(transform.position, player.position) > retrieveDistance)
             {
                 animator.SetBool("Attack", false);
@@ -93,7 +89,6 @@ public class SwordEnemy : MonoBehaviour
         }
         else
         {
-            // Stop chasing and start returning to start position
             animator.SetBool("Attack", false);
             isChasingPlayer = false;
             isReturningToStart = true;
@@ -102,10 +97,8 @@ public class SwordEnemy : MonoBehaviour
 
     void ReturnToStartPosition()
     {
-        // Move back to the starting position
         transform.position = Vector2.MoveTowards(transform.position, startingPosition, moveSpeed * Time.deltaTime);
 
-        // Turn towards the starting position
         if (transform.position.x > startingPosition.x && facingLeft)
         {
             transform.eulerAngles = new Vector3(0, -180, 0);
@@ -117,7 +110,6 @@ public class SwordEnemy : MonoBehaviour
             facingLeft = true;
         }
 
-        // Stop returning when the enemy reaches the starting position
         if (Vector2.Distance(transform.position, startingPosition) < 0.1f)
         {
             isReturningToStart = false;
@@ -128,7 +120,6 @@ public class SwordEnemy : MonoBehaviour
     {
         transform.Translate(Vector2.left * Time.deltaTime * moveSpeed);
 
-        // Use a raycast to check for patrol boundaries
         RaycastHit2D hit = Physics2D.Raycast(checkPoint.position, Vector2.down, distance, layerMask);
 
         if (hit == false && facingLeft)
