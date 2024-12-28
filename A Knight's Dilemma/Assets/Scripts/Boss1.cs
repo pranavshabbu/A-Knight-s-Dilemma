@@ -3,15 +3,15 @@ using UnityEngine.SceneManagement;
 
 public class Boss : MonoBehaviour
 {
-    public int poise = 3; // Current poise value
-    public int poiseVal = 3; // Reset value for poise
+    public int poise = 3; 
+    public int poiseVal = 3; 
     private bool isHurt = false;
     public int maxHealth = 20;
 
-    public Transform player; // Reference to the player's transform
-    public float chaseRange = 10f; // Distance to start chasing the player
-    public float attackRange = 2f; // Distance to start attacking
-    public float chaseSpeed = 3f; // Speed of the boss while chasing
+    public Transform player;
+    public float chaseRange = 10f; 
+    public float attackRange = 2f; 
+    public float chaseSpeed = 3f; 
 
     public Transform attackPoint1;
     public Transform attackPoint2;
@@ -19,8 +19,8 @@ public class Boss : MonoBehaviour
     public float attackRadius2 = 1.5f;
     public LayerMask attackLayer;
 
-    public Animator animator; // Assign the Animator component in the Inspector
-    public bool facingLeft = true; // To handle flipping
+    public Animator animator; 
+    public bool facingLeft = true; 
 
     private string[][] movesets =
     {
@@ -38,7 +38,7 @@ public class Boss : MonoBehaviour
     public float noDamageTimer = 0f;
     private bool timerActive = false;
 
-    public GameObject alternateGameOverPanel; // Assign this in the Unity Inspector
+    public GameObject alternateGameOverPanel; 
     private bool alternateEndingDisabled = false;
 
 
@@ -68,11 +68,10 @@ public class Boss : MonoBehaviour
         {
             if (distanceToPlayer <= chaseRange && distanceToPlayer > attackRange)
             {
-                // Stop any attack animations
                 animator.SetBool("Attack1", false);
                 animator.SetBool("Attack2", false);
 
-                StopAllCoroutines(); // Stop any ongoing combos
+                StopAllCoroutines(); 
                 isPerformingCombo = false;
                 ChasePlayer();
             }
@@ -82,12 +81,11 @@ public class Boss : MonoBehaviour
             }
             else
             {
-                // Stop all animations when out of range
                 animator.SetBool("Run", false);
                 animator.SetBool("Attack1", false);
                 animator.SetBool("Attack2", false);
 
-                StopAllCoroutines(); // Stop any ongoing combos
+                StopAllCoroutines();
                 isPerformingCombo = false;
             }
         }
@@ -96,7 +94,6 @@ public class Boss : MonoBehaviour
 
     private void ChasePlayer()
     {
-        // Flip to face the player
         if (player.position.x > transform.position.x && facingLeft)
         {
             transform.eulerAngles = new Vector3(0, -180, 0);
@@ -108,13 +105,13 @@ public class Boss : MonoBehaviour
             facingLeft = true;
         }
 
-        animator.SetBool("Run", true); // Trigger run animation
+        animator.SetBool("Run", true); 
         transform.position = Vector2.MoveTowards(transform.position, player.position, chaseSpeed * Time.deltaTime);
     }
 
     private void StartAttack()
     {
-        animator.SetBool("Run", false); // Stop running animation
+        animator.SetBool("Run", false); 
         if (!timerActive)
         {
             timerActive = true;
@@ -130,10 +127,8 @@ public class Boss : MonoBehaviour
     {
         if (isPerformingCombo) return;
 
-        // Pick a random moveset
         string[] selectedMoveset = movesets[Random.Range(0, movesets.Length)];
 
-        // Start performing the selected moveset
         StartCoroutine(PerformCombo(selectedMoveset));
     }
 
@@ -146,10 +141,9 @@ public class Boss : MonoBehaviour
             if (isHurt)
             {
                 isPerformingCombo = false;
-                yield break; // Exit the combo if hurt
+                yield break; 
             }
 
-            // Interrupt if the player moves out of attack range
             float distanceToPlayer = Vector2.Distance(transform.position, player.position);
             if (distanceToPlayer > attackRange)
             {
@@ -161,7 +155,6 @@ public class Boss : MonoBehaviour
             animator.SetBool(attack, true);
             Debug.Log($"Boss performs: {attack}");
 
-            // Wait for current animation to finish
             yield return new WaitForSeconds(GetCurrentAnimationLength(attack));
 
             animator.SetBool(attack, false);
@@ -179,7 +172,7 @@ public class Boss : MonoBehaviour
 
         if (collideInfo && collideInfo.gameObject.GetComponent<Player>() != null)
         {
-            collideInfo.gameObject.GetComponent<Player>().TakeDamage(1); // Damage amount
+            collideInfo.gameObject.GetComponent<Player>().TakeDamage(1);
         }
     }
 
@@ -188,23 +181,23 @@ public class Boss : MonoBehaviour
         poise--;
         if (poise <= 0)
         {
-            poise = poiseVal; // Reset poise
-            isHurt = true;    // Set hurt state
-            isPerformingCombo = false; // Reset combo state
-            animator.SetTrigger("Hurt"); // Trigger hurt animation
+            poise = poiseVal; 
+            isHurt = true;    
+            isPerformingCombo = false; 
+            animator.SetTrigger("Hurt"); 
             Debug.Log("Boss is staggered!");
 
-            StopAllCoroutines(); // Stop all ongoing actions
+            StopAllCoroutines(); 
             StartCoroutine(ResumeAttackAfterHurt());
         }
     }
 
     private System.Collections.IEnumerator ResumeAttackAfterHurt()
     {
-        yield return new WaitForSeconds(GetCurrentAnimationLength("Poise")); // Wait for Hurt animation to finish
-
-        isHurt = false; // Reset hurt state
-        isPerformingCombo = false; // Reset combo state if needed
+        yield return new WaitForSeconds(GetCurrentAnimationLength("Poise")); 
+        
+        isHurt = false; 
+        isPerformingCombo = false; 
     }
 
     private float GetCurrentAnimationLength(string animationName)
@@ -218,7 +211,7 @@ public class Boss : MonoBehaviour
             }
         }
         Debug.LogWarning($"Animation {animationName} not found.");
-        return 0.5f; // Default fallback duration
+        return 0.5f; 
     }
 
     public void TakeDamage(int damage)
