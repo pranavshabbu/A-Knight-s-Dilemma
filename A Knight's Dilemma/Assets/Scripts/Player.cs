@@ -30,16 +30,14 @@ public class Player : MonoBehaviour
     public AudioClip parrySound;
     private AudioSource audioSource;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
 
-        checkpointX = PlayerPrefs.GetFloat("CheckpointX", 0f); // Default to 0 if not set
+        checkpointX = PlayerPrefs.GetFloat("CheckpointX", 0f); 
         checkpointY = PlayerPrefs.GetFloat("CheckpointY", 0f);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(maxHealth <= 0)
@@ -114,9 +112,8 @@ public class Player : MonoBehaviour
             onGround = true;
             animator.SetBool("Jump", false);
 
-            checkpointReached = true; // Mark that a checkpoint is passed
+            checkpointReached = true; 
 
-            // Store the checkpoint position
             checkpointX = transform.position.x;
             checkpointY = transform.position.y;
 
@@ -159,7 +156,7 @@ public class Player : MonoBehaviour
     public void TakeDamage(int damage)
     {
         AnimatorStateInfo currentState = animator.GetCurrentAnimatorStateInfo(0);
-        if (currentState.IsName("Player_Parry")) // Replace "Parry" with the actual name of the parry animation state
+        if (currentState.IsName("Player_Parry")) 
         {
             animator.SetTrigger("Parry_Success");
 
@@ -205,13 +202,10 @@ public class Player : MonoBehaviour
 
     private System.Collections.IEnumerator WaitForDeathAnimation()
     {
-        // Wait for the length of the "Player_Death" animation to finish
         yield return new WaitForSeconds(GetCurrentAnimationLength("Player_Death") * 0.8f);
 
-        // Continue with the rest of the death logic after the animation has finished
         if (checkpointReached)
         {
-            // Respawn at the saved checkpoint
             transform.position = new Vector3(checkpointX, checkpointY, transform.position.z);
             animator.Play("Player_Idle");
             maxHealth = 5;
@@ -223,13 +217,11 @@ public class Player : MonoBehaviour
         }
         else
         {
-            // No checkpoint, reset the scene
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             Debug.Log("No checkpoint, resetting scene.");
         }
     }
 
-    // Method to get the length of the animation based on its name
     private float GetCurrentAnimationLength(string animationName)
     {
         var clips = animator.runtimeAnimatorController.animationClips;
@@ -242,25 +234,5 @@ public class Player : MonoBehaviour
         }
         Debug.LogWarning($"Animation {animationName} not found.");
         return 0.5f;
-        // Get the animation clip for the given animation name
-        //AnimationClip clip = animator.runtimeAnimatorController.animationClips
-        //    .FirstOrDefault(a => a.name == animationName);
-
-        //if (clip != null)
-        //{
-        //    return clip.length; // Return the length of the animation clip
-        //}
-
-        //return 0f; // If no clip is found, return 0 (fallback)
     }
-
-
-
-    //public void Die()
-    //{
-    //    Debug.Log("Dead");
-    //    FindAnyObjectByType<GameManager>().isGameActive = false;
-    //    Destroy(this.gameObject);
-    //    SceneManager.LoadScene("SampleScene");
-    //}
 }
