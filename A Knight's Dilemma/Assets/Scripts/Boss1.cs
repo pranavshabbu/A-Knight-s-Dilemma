@@ -233,8 +233,6 @@ public class Boss : MonoBehaviour
     private System.Collections.IEnumerator WaitForDeathAnimation()
     {
         yield return new WaitForSeconds(GetCurrentAnimationLength("Death") * 0.8f);
-        //yield return new WaitForSeconds(GetCurrentAnimationLength("Death"));
-        //Destroy(this.gameObject);
         gameOverPanel.SetActive(true);
         Time.timeScale = 0f;
     }
