@@ -147,12 +147,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    //private void OnDrawGizmosSelected()
-    //{
-    //    if (attackPoint == null) return;
-    //    Gizmos.DrawSphere(attackPoint.position, attackRadius);
-    //}
-
     public void TakeDamage(int damage)
     {
         AnimatorStateInfo currentState = animator.GetCurrentAnimatorStateInfo(0);
