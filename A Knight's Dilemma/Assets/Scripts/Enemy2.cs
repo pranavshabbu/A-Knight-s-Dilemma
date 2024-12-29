@@ -173,13 +173,13 @@ public class Enemy2 : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        if (attackPoint == null)
-        {
-            return;
-        }
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
-    }
+    // private void OnDrawGizmosSelected()
+    // {
+    //     if (attackPoint == null)
+    //     {
+    //         return;
+    //     }
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
+    // }
 }
