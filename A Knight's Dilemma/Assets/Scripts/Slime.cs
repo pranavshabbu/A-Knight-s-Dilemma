@@ -109,26 +109,18 @@ public class Slime : MonoBehaviour
         maxHealth -= damage;
     }
 
-    //public void TriggerHurtAnimation()
-    //{
-    //    if (animator != null)
-    //    {
-    //        animator.SetTrigger("Hurt");
-    //    }
-    //}
     void Die()
     {
         Destroy(this.gameObject);
-        //Debug.Log("Dead");
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        if (attackPoint == null)
-        {
-            return;
-        }
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
-    }
+    // private void OnDrawGizmosSelected()
+    // {
+    //     if (attackPoint == null)
+    //     {
+    //         return;
+    //     }
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
+    // }
 }
